@@ -6,8 +6,6 @@ const {createNewCSV, writeNewFile} = require('./createNewCSV')
 const {checkForLetters} = require('./checkForLetters')
 const {checkForDashes} = require('./checkForDashes')
 const {trimSKU} = require('./trimSKU')
-const {matchesVariantPattern} = require('./matchesVariantPattern')
-
 
 function runApp() {
   const entries = []
@@ -22,16 +20,9 @@ function handleCSVData(csv_entries) {
   const variants = checkForVariants(csv_entries)
   if (typeof variants == "undefined") throw "Variants is undefined in handleCSVData"
   console.log("Number of variant sets", variants.length)
-  const flattened_variants = flattenVariants(variants)
-  const non_variants = filterToNonVariants(flattened_variants, csv_entries)
-  const secondary_variants = secondaryCatchVariants(non_variants)
-  const flattened_all_variants = [
-    ...flattened_variants,
-    ...secondary_variants
-  ]
-  const updated_non_variants = filterToNonVariants(flattened_all_variants, csv_entries)
-  createCSVOfVariants(removeDuplicates(flattened_all_variants))
-  createCSVOfNonVariants(removeDuplicates(updated_non_variants))
+  const non_variants = filterToNonVariants(variants, csv_entries)
+  createCSVOfVariants(removeDuplicates(variants))
+  createCSVOfNonVariants(removeDuplicates(non_variants))
 }
 
 
@@ -42,7 +33,9 @@ function checkForVariants(all_products) {
     const bundle = compileVariants(product["Variant SKU"], all_products)
     if (bundle) base_products.push( bundle )
   }
-  if (base_products.length > 1) return base_products
+  const flattened_variants = flattenVariants(base_products)
+  const no_duplicate_variants = removeDuplicates(flattened_variants)
+  if (no_duplicate_variants.length > 1) return no_duplicate_variants
   return
 }
 
@@ -50,6 +43,8 @@ function checkForVariants(all_products) {
 function compileVariants(find_sku, all_products) {
   const base_product = all_products.find(p => p["Variant SKU"] == find_sku)
   if (!base_product) throw "Not being able to find the product in the source list is an issue"
+  if ( /[bmBM]+$/.test(find_sku) ) return
+  if ( !/[0-9]/.test(find_sku) ) return
   const variations = findVariationsOfSku(find_sku, all_products)
   if (variations.length == 0) return
   return [base_product, ...variations]
@@ -60,8 +55,13 @@ function findVariationsOfSku(sku, all_products) {
   return all_products.filter(product => {
     const base_sku = product["Variant SKU"]
     if (sku == base_sku) return false
-    if ( checkForDashes(sku, base_sku) ) return true
-    return checkForLetters(sku, base_sku)
+    if (!base_sku || !sku) return false
+    if (typeof base_sku !== 'string') return false
+    if (typeof sku !== 'string') return false
+    
+    if ( /[bmBM]+$/.test(base_sku) ) return false
+    if ( !/[0-9]/.test(base_sku) ) return false
+    return (trimSKU(sku) == trimSKU(base_sku))
   })
 }
 
@@ -103,39 +103,20 @@ function setParentMasterID(variants_array) {
 
     for (const [index, variant] of variant_set.entries()) {
       const cloned_variant = Object.assign({}, variant)
-      cloned_variant['Handle'] = (index == 0) ? set_index : ""
+      cloned_variant['Handle'] = set_index
       // if (index == 0) console.log(cloned_variant["Title"])
       cloned_variant['Option1 Value'] = cloned_variant['Title']
+      if (index != 0) {
+        cloned_variant['Title'] = ""
+        cloned_variant['Vendor'] = ""
+        cloned_variant['Published'] = ""
+        cloned_variant['Option1 Name'] = ""
+      }
       flattened_variants.push(cloned_variant)
     }
   }
   return flattened_variants
 }
-
-
-function secondaryCatchVariants(all_products) {
-  const secondary_variants = all_products.filter(product => {
-    return findStragglerVariants(product, all_products)
-  })
-  console.log("secondary_variants.length", secondary_variants.length)
-  return secondary_variants
-}
-
-function findStragglerVariants(product, all_products) {
-  const orig_sku = product['Variant SKU']
-  if (!matchesVariantPattern(orig_sku)) return false
-  for (const single of all_products) {
-    const seek_sku = single['Variant SKU']
-    if (orig_sku == seek_sku) continue
-    if (!matchesVariantPattern(seek_sku)) continue
-    if (/[bmBM]+$/.exec(orig_sku)) continue
-    const trim_orig = trimSKU(orig_sku)
-    const trim_seek = trimSKU(seek_sku)
-    if (trim_orig == trim_seek) return true
-  }
-  return false
-}
-
 
 
 module.exports = {
@@ -151,6 +132,5 @@ module.exports = {
   createCSVOfVariants,
   createCSVOfNonVariants,
   filterToNonVariants,
-  secondaryCatchVariants,
   flattenVariants,
 }

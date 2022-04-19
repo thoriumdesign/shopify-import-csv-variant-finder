@@ -29,16 +29,9 @@ function runTests(testEntries) {
   testFindVariationsOfSku(testEntries)
   testCompileVariants(testEntries)
   const variants = testCheckForVariants(testEntries)
-  const flattened_variants = flattenVariants(variants)
-  const non_variants = filterToNonVariants(flattened_variants, testEntries)
-  const secondary_variants = secondaryCatchVariants(non_variants)
-  const flattened_all_variants = [
-    ...flattened_variants,
-    ...secondary_variants
-  ]
-  const updated_non_variants = filterToNonVariants(flattened_all_variants, testEntries)
-  testCreateCSVOfVariants(flattened_all_variants)
-  testCreateCSVOfNonVariants(updated_non_variants)
+  const non_variants = filterToNonVariants(variants, testEntries)
+  testCreateCSVOfVariants(variants)
+  testCreateCSVOfNonVariants(non_variants)
 }
 
 

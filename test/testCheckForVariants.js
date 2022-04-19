@@ -6,13 +6,13 @@ function testCheckForVariants(all_test_products) {
   console.log(`\nStarting testCheckForVariants`)
   const results1 = checkForVariants(all_test_products)
 
-  const compare_res1 = results1.map(product_set => {
-    return product_set.map(prod => prod["Variant SKU"]).join(",")
-  })
-  const test1 = (JSON.stringify(compare_res1) === JSON.stringify(check_products))
-  const test_case_1 = test1 ? "OK" : "FAILED"
+  // const compare_res1 = results1.map(product_set => {
+  //   return product_set.map(prod => prod["Variant SKU"]).join(",")
+  // })
+  // const test1 = (JSON.stringify(compare_res1) === JSON.stringify(check_products))
+  // const test_case_1 = test1 ? "OK" : "FAILED"
 
-  logCase("testCheckForVariants", test_case_1, "1")
+  // logCase("testCheckForVariants", test_case_1, "1")
 
   return results1
 }
