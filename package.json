@@ -1,6 +1,6 @@
 {
   "name": "shopify-import-csv-variant-finder",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A script to format a Shopify product import CSV, by locating and structuring variants with basal and derived SKUs.",
   "homepage": "https://github.com/thoriumdesign/shopify-import-csv-variant-finder",
   "license": "MIT-Modern-Variant",

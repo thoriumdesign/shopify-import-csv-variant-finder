@@ -19,9 +19,10 @@ async function writeNewFile( err, csv_string, file_name = 'someData.csv', test =
   // console.log("test writeNewFile", err, csv_string)
   if (!file_name.endsWith(".csv")) file_name = `${file_name}.csv`
   const prefix = test ? './test/' : './data/'
-  file_name = `${prefix}${file_name}`
-  await fs.promises.writeFile(file_name, csv_string, (error) => {
+  const full_file_name = `${prefix}${file_name}`
+  fs.writeFile(full_file_name, csv_string, (error) => {
     if (error) console.error(error)
+    if (!error) console.log("Created file", full_file_name)
   })
 }
 
