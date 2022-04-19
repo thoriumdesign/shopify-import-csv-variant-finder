@@ -1,0 +1,21 @@
+{
+  "name": "shopify-import-csv-variant-finder",
+  "version": "1.0.0",
+  "description": "A script to format a Shopify product import CSV, by locating and structuring variants with basal and derived SKUs.",
+  "homepage": "https://github.com/thoriumdesign/shopify-import-csv-variant-finder",
+  "license": "MIT-Modern-Variant",
+  "author": {
+    "name": "Jarrett Tilford",
+    "email": "jarrett@thoriumdesign.com",
+    "url": "https://thorium.design/"
+  },
+  "main": "script.js",
+  "scripts": {
+    "test": "node ./test/run-tests.js",
+    "start": "node ./script.js"
+  },
+  "dependencies": {
+    "csv": "^6.0.5",
+    "fs": "^0.0.1-security"
+  }
+}
