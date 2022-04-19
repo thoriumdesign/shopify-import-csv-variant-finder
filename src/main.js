@@ -21,10 +21,9 @@ function handleCSVData(csv_entries) {
   console.log('CSV file successfully processed. Row count:', csv_entries.length)
   const variants = checkForVariants(csv_entries)
   if (typeof variants == "undefined") throw "Variants is undefined in handleCSVData"
-  console.log("Number of variant sets", variants.length)
   const non_variants = filterToNonVariants(variants, csv_entries)
-  createCSVOfVariants(removeDuplicates(variants))
-  createCSVOfNonVariants(removeDuplicates(non_variants))
+  createCSVOfVariants(variants)
+  createCSVOfNonVariants(non_variants)
 }
 
 
@@ -62,9 +61,10 @@ function findVariationsOfSku(sku, all_products) {
 }
 
 function filterToNonVariants(variants_arr, all_products) {
-  return all_products.filter(product => {
+  const non_variants = all_products.filter(product => {
     return !productIsAVariant(product, variants_arr)
   })
+  return removeDuplicates(non_variants)
 }
 
 function productIsAVariant(lookup_product, all_variants) {
