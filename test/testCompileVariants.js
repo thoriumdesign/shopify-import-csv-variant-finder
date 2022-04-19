@@ -15,15 +15,11 @@ function testCompileVariants(test_products) {
   const test10 = compileVariants("RG9132S", test_products)
   const test11 = compileVariants("RG9133S", test_products)
 
-  // const test_case_1 = (test1 === "RG1146,RG1146-O") ? "OK" : "FAILED"
   const test_case_1 = (
-    test1[0]["Variant SKU"] === "RG1146" 
-    && test1[1]["Variant SKU"] === "RG1146-O"
+    test1 === undefined
   ) ? "OK" : "FAILED"
   
-  // const test_case_2 = (
-  //   test2 === "RG1211,RG1211-18,RG1211-24,RG1211-30" 
-  // ) ? "OK" : "FAILED"
+  console.log(test2)
   const test_case_2 = (
     test2[0]["Variant SKU"] === "RG1211" 
     && test2[1]["Variant SKU"] === "RG1211-18"
@@ -31,29 +27,19 @@ function testCompileVariants(test_products) {
     && test2[3]["Variant SKU"] === "RG1211-30"
   ) ? "OK" : "FAILED"
 
-  // const test_case_3 = (
-  //   test3 === "RG1248,RG1248-18,RG1248-24,RG1248-30,RG1248F" 
-  // ) ? "OK" : "FAILED"
   const test_case_3 = (
     test3[0]["Variant SKU"] === "RG1248" 
     && test3[1]["Variant SKU"] === "RG1248-18"
     && test3[2]["Variant SKU"] === "RG1248-24"
     && test3[3]["Variant SKU"] === "RG1248-30"
-    && test3[4]["Variant SKU"] === "RG1248F"
   ) ? "OK" : "FAILED"
 
-  // const test_case_4 = (
-  //   test4 === "RG1353,RG1353-24,RG1353-30,RG1353-O,RG1353F" 
-  // ) ? "OK" : "FAILED"
   const test_case_4 = (
     test4[0]["Variant SKU"] === "RG1353" 
     && test4[1]["Variant SKU"] === "RG1353-24"
     && test4[2]["Variant SKU"] === "RG1353-30"
-    && test4[3]["Variant SKU"] === "RG1353-O"
-    && test4[4]["Variant SKU"] === "RG1353F"
   ) ? "OK" : "FAILED"
 
-  // const test_case_5 = (test5 === "RG9131,RG9131S") ? "OK" : "FAILED"
   const test_case_5 = (
     test5[0]["Variant SKU"] === "RG9131" 
     && test5[1]["Variant SKU"] === "RG9131S"

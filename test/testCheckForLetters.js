@@ -4,7 +4,7 @@ const {checkForLetters} = require('../src/main')
 function testCheckForLetters() {
   const check0 = ( !checkForLetters("RG2020", "RG2020") ) ? "OK" : "FAILED"
   const check1 = ( checkForLetters("RG2020", "RG2020S") ) ? "OK" : "FAILED"
-  const check2 = ( checkForLetters("RG2020", "RG2020B") ) ? "OK" : "FAILED"
+  const check2 = ( !checkForLetters("RG2020", "RG2020B") ) ? "OK" : "FAILED"
   const check3 = ( checkForLetters("RG2020", "RG2020C") ) ? "OK" : "FAILED"
   const check4 = ( checkForLetters("RG2020", "RG2020L") ) ? "OK" : "FAILED"
   const check5 = ( checkForLetters("RG2020", "RG2020XL") ) ? "OK" : "FAILED"

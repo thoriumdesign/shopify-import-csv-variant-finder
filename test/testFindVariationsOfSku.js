@@ -19,7 +19,7 @@ function testFindVariationsOfSku(test_products) {
   // console.log(test2)
   // console.log(test6)
 
-  const test_case_1 = (test1[0]["Variant SKU"] === "RG1146-O") ? "OK" : "FAILED"
+  const test_case_1 = (test1[0] === undefined) ? "OK" : "FAILED"
   const test_case_2 = (
     test2[0]["Variant SKU"] === "RG1211-18" &&
     test2[1]["Variant SKU"] === "RG1211-24" &&
@@ -28,14 +28,11 @@ function testFindVariationsOfSku(test_products) {
   const test_case_3 = (
     test3[0]["Variant SKU"] === "RG1248-18" &&
     test3[1]["Variant SKU"] === "RG1248-24" &&
-    test3[2]["Variant SKU"] === "RG1248-30" &&
-    test3[3]["Variant SKU"] === "RG1248F"
+    test3[2]["Variant SKU"] === "RG1248-30"
   ) ? "OK" : "FAILED"
   const test_case_4 = (
     test4[0]["Variant SKU"] === "RG1353-24" &&
-    test4[1]["Variant SKU"] === "RG1353-30" &&
-    test4[2]["Variant SKU"] === "RG1353-O" &&
-    test4[3]["Variant SKU"] === "RG1353F"
+    test4[1]["Variant SKU"] === "RG1353-30"
   ) ? "OK" : "FAILED"
   const test_case_5 = (test5[0]["Variant SKU"] === "RG9131S") ? "OK" : "FAILED"
 

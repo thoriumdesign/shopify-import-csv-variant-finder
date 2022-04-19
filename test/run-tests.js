@@ -7,7 +7,7 @@ const {testCompileVariants} = require('./testCompileVariants')
 const {testCheckForVariants} = require('./testCheckForVariants')
 const {testCreateCSVOfVariants} = require('./testCreateCSVOfVariants')
 const {testCreateCSVOfNonVariants} = require('./testCreateCSVOfNonVariants')
-const {secondaryCatchVariants, filterToNonVariants, flattenVariants} = require('../src/main')
+const {filterToNonVariants} = require('../src/main')
 
 /**
  * Tests
@@ -27,7 +27,7 @@ function runTests(testEntries) {
   testCheckForLetters()
   testCheckForDashes()
   testFindVariationsOfSku(testEntries)
-  testCompileVariants(testEntries)
+  // testCompileVariants(testEntries)
   const variants = testCheckForVariants(testEntries)
   const non_variants = filterToNonVariants(variants, testEntries)
   testCreateCSVOfVariants(variants)
