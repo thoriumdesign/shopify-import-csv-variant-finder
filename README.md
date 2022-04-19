@@ -1,5 +1,7 @@
 # shopify-import-csv-variant-finder
 
+A script to format a Shopify product import CSV, by locating and structuring variants with basal and derived SKUs.
+
 To run the test suite, simply run `npm test`
 
 To execute the appliaction, run `npm start`
