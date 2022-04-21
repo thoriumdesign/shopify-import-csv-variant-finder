@@ -3,6 +3,7 @@ function matchesSkipPattern(sku) {
   if ( /[O]$/.test(sku) ) return true // Oval signs, stay as their own product
   if ( /[F]$/.test(sku) ) return true // Flange, stay as their own product
   if ( !/[0-9]/.test(sku) ) return true
+  if ( /RR-/.test(sku) ) return true
   return false
 }
 
