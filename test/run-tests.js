@@ -1,12 +1,10 @@
 const fs = require('fs')
 const csv = require('csv')
-const {testCheckForLetters} = require('./testCheckForLetters')
-const {testCheckForDashes} = require('./testCheckForDashes')
 const {testFindVariationsOfSku} = require('./testFindVariationsOfSku')
-const {testCompileVariants} = require('./testCompileVariants')
 const {testCheckForVariants} = require('./testCheckForVariants')
 const {testCreateCSVOfVariants} = require('./testCreateCSVOfVariants')
 const {testCreateCSVOfNonVariants} = require('./testCreateCSVOfNonVariants')
+
 const {filterToNonVariants} = require('../src/main')
 
 /**
@@ -24,10 +22,7 @@ function loadTests() {
 
 // Run all our tests, then start the app
 function runTests(testEntries) {
-  testCheckForLetters()
-  testCheckForDashes()
   testFindVariationsOfSku(testEntries)
-  // testCompileVariants(testEntries)
   const variants = testCheckForVariants(testEntries)
   const non_variants = filterToNonVariants(variants, testEntries)
   testCreateCSVOfVariants(variants)

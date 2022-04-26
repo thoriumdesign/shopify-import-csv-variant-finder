@@ -2,12 +2,11 @@ const fs = require('fs')
 const csv = require('csv')
 
 const {removeDuplicates} = require('./removeDuplicates')
-const {checkForLetters} = require('./checkForLetters')
-const {checkForDashes} = require('./checkForDashes')
 const {trimSKU} = require('./trimSKU')
 const {matchesSkipPattern} = require('./matchesSkipPattern')
 const {createCSVOfVariants} = require('./createCSVOfVariants')
 const {createCSVOfNonVariants} = require('./createCSVOfNonVariants')
+const {createFormattedVariant} = require('./createFormattedVariant')
 
 function runApp() {
   const entries = []
@@ -94,19 +93,6 @@ function setVariantHandle(variants_array) {
   return flattened_variants
 }
 
-function createFormattedVariant(variant, handle_id, variant_index) {
-  const cloned_variant = Object.assign({}, variant)
-  cloned_variant['Handle'] = handle_id
-  cloned_variant['Option1 Value'] = cloned_variant['Title']
-  if (variant_index != 0) {
-    cloned_variant['Title'] = ""
-    cloned_variant['Vendor'] = ""
-    cloned_variant['Published'] = ""
-    cloned_variant['Option1 Name'] = ""
-  }
-  return cloned_variant
-}
-
 
 module.exports = {
   runApp,
@@ -114,8 +100,6 @@ module.exports = {
   checkForVariants,
   compileVariants,
   findVariationsOfSku,
-  checkForLetters,
-  checkForDashes,
   createCSVOfVariants,
   createCSVOfNonVariants,
   filterToNonVariants,
